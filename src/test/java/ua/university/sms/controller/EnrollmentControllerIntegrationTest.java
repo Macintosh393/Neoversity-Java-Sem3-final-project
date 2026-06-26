@@ -57,24 +57,24 @@ public class EnrollmentControllerIntegrationTest {
         Teacher teacher = Teacher.builder()
                 .firstName("Professor")
                 .lastName("X")
-                .email("prof.x@mutant.edu")
+                .email("prof.x@mail.edu")
                 .dateOfBirth(LocalDate.of(1970, 1, 1))
                 .position(TeacherPosition.PROFESSOR)
                 .build();
         teacher = teacherRepository.save(teacher);
 
         course = Course.builder()
-                .name("Mutant History")
+                .name("Roman History")
                 .credits(3)
-                .description("Intro to mutant history")
+                .description("Intro to Roman history")
                 .teacher(teacher)
                 .build();
         course = courseRepository.save(course);
 
         student = Student.builder()
-                .firstName("Wolverine")
-                .lastName("Logan")
-                .email("logan@xmen.com")
+                .firstName("Logan")
+                .lastName("Paul")
+                .email("logan@mail.com")
                 .enrollmentYear(2024)
                 .status(StudentStatus.ACTIVE)
                 .build();
@@ -94,8 +94,8 @@ public class EnrollmentControllerIntegrationTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(enrollRequest)))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.studentName", is("Wolverine Logan")))
-                .andExpect(jsonPath("$.courseName", is("Mutant History")))
+                .andExpect(jsonPath("$.studentName", is("Logan Paul")))
+                .andExpect(jsonPath("$.courseName", is("Roman History")))
                 .andExpect(jsonPath("$.grade", is("NA")))
                 .andExpect(jsonPath("$.paid", is(false)))
                 .andReturn().getResponse().getContentAsString();
